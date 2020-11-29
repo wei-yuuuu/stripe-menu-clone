@@ -50,7 +50,6 @@ function DropdownOption({ name, content: Content }: DropdownOptionProps) {
       setRegistered(true);
     } else if (registered && dimensions) {
       updateOption(id, {
-        // optionDimensions,
         optionCenterX: optionDimensions.x + optionDimensions.width / 2,
       });
     }

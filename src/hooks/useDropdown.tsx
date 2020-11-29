@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useContext, useMemo } from "react";
 
-type Option = Partial<{
+export type Option = Partial<{
   id: number;
   optionDimensions: any;
   optionCenterX: number;
-  WrappedContent: React.ReactNode;
+  WrappedContent: React.ElementType;
   contentDimensions: { width: number; height: number };
 }>;
 

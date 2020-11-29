@@ -7,8 +7,7 @@ export const DURATION = 0.2;
 const DELAY = 0.05;
 
 function DropdownBase() {
-  const { options, targetOption, targetId } = useDropdown();
-  // const isActive = typeof targetId === "number";
+  const { options, targetOption } = useDropdown();
 
   let [width, height, x] = [0, 0, 0];
   if (targetOption) {
@@ -21,13 +20,7 @@ function DropdownBase() {
     <div className="dropdown-root">
       <motion.div
         className="dropdown-container"
-        animate={{
-          x,
-          width,
-          height,
-          // opacity: isActive ? 1 : 0,
-          // pointerEvents: isActive ? "unset" : "none",
-        }}
+        animate={{ x, width, height }}
         transition={{
           ease: "easeOut",
           x: { duration: DURATION },
