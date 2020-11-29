@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Option, useDropdown } from "../../hooks/useDropdown";
+import type { Option } from "../../hooks/useDropdown";
+import { useDropdown } from "../../hooks/useDropdown";
 import { DURATION } from "./DropdownBase";
 
 type DropdownSectionProps = {
