@@ -69,7 +69,6 @@ function DropdownOption({ name, content: Content }: DropdownOptionProps) {
       ref={setRef}
       onMouseDown={handleClick}
       onHoverStart={handleOpen}
-      onHoverEnd={handleClose}
       onFocus={handleOpen}
       onBlur={handleClose}
     >
