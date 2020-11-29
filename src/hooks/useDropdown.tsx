@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useContext, useMemo } from "react";
 
-type Option = {
+type Option = Partial<{
   id: number;
   optionDimensions: any;
   optionCenterX: number;
   WrappedContent: React.ReactNode;
-  contentDimensions?: { width: number; height: number };
-};
+  contentDimensions: { width: number; height: number };
+}>;
 
 type Options = Option[];
 
@@ -14,7 +14,7 @@ type Context = {
   options: Options;
   targetOption: Option;
   registerOptions: (args: Option) => void;
-  updateOptions: (id: number, options: any) => void;
+  updateOption: (id: number, option: Option) => void;
   targetId: number;
   setTargetId: React.Dispatch<React.SetStateAction<number>>;
 } | null;
@@ -40,14 +40,14 @@ function DropdownProvider<T>({ children }: React.PropsWithChildren<T>) {
     [setOptions]
   );
 
-  const updateOptions = useCallback(
-    (id, props) => {
-      setOptions((items) =>
-        items.map((item) => {
-          if (item.id === id) {
-            item = { ...item, ...props };
+  const updateOption = useCallback(
+    (id: number, props: Option) => {
+      setOptions((prevOptions) =>
+        prevOptions.map((option) => {
+          if (option.id === id) {
+            return { ...option, ...props };
           }
-          return item;
+          return option;
         })
       );
     },
@@ -59,11 +59,11 @@ function DropdownProvider<T>({ children }: React.PropsWithChildren<T>) {
       options,
       targetOption: options.find((option) => option.id === targetId) as Option,
       registerOptions,
-      updateOptions,
+      updateOption,
       targetId,
       setTargetId,
     }),
-    [options, registerOptions, targetId, updateOptions]
+    [options, registerOptions, targetId, updateOption]
   );
 
   return (

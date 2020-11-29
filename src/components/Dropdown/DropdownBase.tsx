@@ -12,10 +12,9 @@ function DropdownBase() {
 
   let [width, height, x] = [0, 0, 0];
   if (targetOption) {
-    const { optionCenterX, contentDimensions } = targetOption;
-    width = contentDimensions?.width as number;
-    height = contentDimensions?.height as number;
-    x = optionCenterX - width / 2;
+    width = targetOption?.contentDimensions?.width as number;
+    height = targetOption?.contentDimensions?.height as number;
+    x = (targetOption?.optionCenterX as number) - width / 2;
   }
 
   return (

@@ -17,20 +17,20 @@ function DropdownOption({ name, content: Content }: DropdownOptionProps) {
   const { setRef, dimensions } = useDimensions();
   const {
     registerOptions,
-    updateOptions,
+    updateOption,
     setTargetId,
     targetId,
   } = useDropdown();
 
   useEffect(() => {
+    const optionDimensions = dimensions as DOMRect;
     if (!registered && dimensions) {
-      const optionDimensions = dimensions as DOMRect;
       const WrappedContent = () => {
         const contentRef = useRef<any>();
 
         useEffect(() => {
           const contentDimensions = contentRef.current.getBoundingClientRect();
-          updateOptions(id, { contentDimensions });
+          updateOption(id, { contentDimensions });
         }, []);
 
         return (
@@ -49,13 +49,12 @@ function DropdownOption({ name, content: Content }: DropdownOptionProps) {
 
       setRegistered(true);
     } else if (registered && dimensions) {
-      const optionDimensions = dimensions as DOMRect;
-      updateOptions(id, {
-        optionDimensions,
+      updateOption(id, {
+        // optionDimensions,
         optionCenterX: optionDimensions.x + optionDimensions.width / 2,
       });
     }
-  }, [Content, dimensions, id, registerOptions, registered, updateOptions]);
+  }, [Content, dimensions, id, registerOptions, registered, updateOption]);
 
   const handleOpen = () => setTargetId(id);
   const handleClose = () => setTargetId(-1);
