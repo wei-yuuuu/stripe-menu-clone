@@ -1,15 +1,16 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useDropdown } from "../../hooks/useDropdown";
+import { DURATION } from "./DropdownBase";
 
 type DropdownSectionProps = {
   option: any;
 };
 
-function DropdownSection({ option }: DropdownSectionProps) {
+function DropdownSection({
+  option: { id, optionCenterX, contentDimensions, WrappedContent },
+}: DropdownSectionProps) {
   const { targetId } = useDropdown();
-
-  const { id, optionCenterX, contentDimensions, WrappedContent } = option;
 
   const contentWidth = contentDimensions?.width || 0;
   const x = optionCenterX - contentWidth / 2;
@@ -22,11 +23,11 @@ function DropdownSection({ option }: DropdownSectionProps) {
       animate={{
         x,
         opacity: isActive ? 1 : 0,
-        pointerEvents: isActive ? "unset" : "none",
+        // pointerEvents: isActive ? "unset" : "none",
       }}
       transition={{
         ease: "easeOut",
-        opacity: { duration: 0.2 },
+        opacity: { duration: DURATION },
       }}
       onHoverStart={() => console.log("hover")}
     >

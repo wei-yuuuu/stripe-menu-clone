@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from "react";
+import React, { useState, useCallback, useContext, useMemo } from "react";
 
 type Option = {
   id: number;
@@ -12,9 +12,9 @@ type Options = Option[];
 
 type Context = {
   options: Options;
+  targetOption: Option;
   registerOptions: (args: Option) => void;
   updateOptions: (id: number, options: any) => void;
-  deleteOptionById: (id: number) => void;
   targetId: number;
   setTargetId: React.Dispatch<React.SetStateAction<number>>;
 } | null;
@@ -54,24 +54,20 @@ function DropdownProvider<T>({ children }: React.PropsWithChildren<T>) {
     [setOptions]
   );
 
-  const deleteOptionById = useCallback(
-    (id) => {
-      setOptions((items) => items.filter((item) => item.id !== id));
-    },
-    [setOptions]
+  const value = useMemo(
+    () => ({
+      options,
+      targetOption: options.find((option) => option.id === targetId) as Option,
+      registerOptions,
+      updateOptions,
+      targetId,
+      setTargetId,
+    }),
+    [options, registerOptions, targetId, updateOptions]
   );
 
   return (
-    <DropdownContext.Provider
-      value={{
-        registerOptions,
-        updateOptions,
-        deleteOptionById,
-        options,
-        targetId,
-        setTargetId,
-      }}
-    >
+    <DropdownContext.Provider value={value}>
       {children}
     </DropdownContext.Provider>
   );

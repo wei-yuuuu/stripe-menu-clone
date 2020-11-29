@@ -15,11 +15,9 @@ function DropdownOption({ name, content: Content }: DropdownOptionProps) {
   const [registered, setRegistered] = useState(false);
 
   const { setRef, dimensions } = useDimensions();
-
   const {
     registerOptions,
     updateOptions,
-    deleteOptionById,
     setTargetId,
     targetId,
   } = useDropdown();
@@ -57,17 +55,7 @@ function DropdownOption({ name, content: Content }: DropdownOptionProps) {
         optionCenterX: optionDimensions.x + optionDimensions.width / 2,
       });
     }
-  }, [
-    id,
-    registered,
-    deleteOptionById,
-    registerOptions,
-    updateOptions,
-    Content,
-    dimensions,
-  ]);
-
-  useEffect(() => deleteOptionById(id), [deleteOptionById, id]);
+  }, [Content, dimensions, id, registerOptions, registered, updateOptions]);
 
   const handleOpen = () => setTargetId(id);
   const handleClose = () => setTargetId(-1);
