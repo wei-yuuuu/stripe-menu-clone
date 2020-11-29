@@ -7,21 +7,18 @@ type DropdownSectionProps = {
 };
 
 function DropdownSection({ option }: DropdownSectionProps) {
-  const { cachedId } = useDropdown();
+  const { targetId } = useDropdown();
 
-  const { id, optionCenterX, contentDimensions } = option;
+  const { id, optionCenterX, contentDimensions, WrappedContent } = option;
 
   const contentWidth = contentDimensions?.width || 0;
   const x = optionCenterX - contentWidth / 2;
-
-  const isActive = cachedId === id;
+  const isActive = targetId === id;
 
   return (
     <motion.div
       className="dropdown-section"
-      initial={{
-        x,
-      }}
+      initial={{ x }}
       animate={{
         x,
         opacity: isActive ? 1 : 0,
@@ -33,7 +30,7 @@ function DropdownSection({ option }: DropdownSectionProps) {
       }}
       onHoverStart={() => console.log("hover")}
     >
-      <option.WrappedContent />
+      <WrappedContent />
     </motion.div>
   );
 }

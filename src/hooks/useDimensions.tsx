@@ -1,35 +1,29 @@
 import { useState, useCallback, useLayoutEffect } from "react";
 
-const getDimensions = (element: any): DOMRect =>
-  element.getBoundingClientRect();
+const getRect = (element: any): DOMRect => element.getBoundingClientRect();
 
-function useDimensions(responsive = true) {
+function useDimensions() {
   const [dimensions, setDimensions] = useState<DOMRect>();
-  const [element, setElement] = useState<any>();
+  const [element, setElement] = useState<DOMRect>();
 
-  const setRef = useCallback((ref) => setElement(ref), []);
+  const setRef = useCallback((ref: any) => setElement(ref), []);
 
   useLayoutEffect(() => {
     if (element) {
       const updateDimensions = () => {
-        window.requestAnimationFrame(() => {
-          setDimensions(getDimensions(element));
-        });
+        setDimensions(getRect(element));
       };
 
       updateDimensions();
 
-      if (responsive) {
-        window.addEventListener("resize", updateDimensions);
-
-        return () => {
-          window.removeEventListener("resize", updateDimensions);
-        };
-      }
+      window.addEventListener("resize", updateDimensions);
+      return () => {
+        window.removeEventListener("resize", updateDimensions);
+      };
     }
-  }, [element, responsive]);
+  }, [element]);
 
-  return [setRef, dimensions, element];
+  return { setRef, dimensions, element };
 }
 
 export default useDimensions;

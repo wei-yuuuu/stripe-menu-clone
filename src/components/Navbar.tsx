@@ -26,6 +26,7 @@ const DropdownStyles = styled.div`
     color: #fff;
     font-size: 18px;
     transition: opacity 0.2s;
+    cursor: pointer;
     &:hover,
     &:focus {
       opacity: 0.55;

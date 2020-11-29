@@ -14,7 +14,7 @@ function DropdownOption({ name, content: Content }: DropdownOptionProps) {
   const { current: id } = useRef(++lastOptionId);
   const [registered, setRegistered] = useState(false);
 
-  const [setRef, dimensions] = useDimensions();
+  const { setRef, dimensions } = useDimensions();
 
   const {
     registerOptions,
@@ -74,7 +74,6 @@ function DropdownOption({ name, content: Content }: DropdownOptionProps) {
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
-
     return targetId === id ? handleClose() : handleOpen();
   };
 

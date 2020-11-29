@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useContext } from "react";
+import React, { useState, useCallback, useContext } from "react";
 
 type Option = {
   id: number;
@@ -17,8 +17,6 @@ type Context = {
   deleteOptionById: (id: number) => void;
   targetId: number;
   setTargetId: React.Dispatch<React.SetStateAction<number>>;
-  cachedId: number;
-  setCachedId: React.Dispatch<React.SetStateAction<number>>;
 } | null;
 
 const DropdownContext = React.createContext<Context>(null);
@@ -26,7 +24,6 @@ const DropdownContext = React.createContext<Context>(null);
 function DropdownProvider<T>({ children }: React.PropsWithChildren<T>) {
   const [options, setOptions] = useState<Options>([]);
   const [targetId, setTargetId] = useState(-1);
-  const [cachedId, setCachedId] = useState(-1);
 
   const registerOptions = useCallback(
     ({ id, optionDimensions, optionCenterX, WrappedContent }) => {
@@ -64,10 +61,6 @@ function DropdownProvider<T>({ children }: React.PropsWithChildren<T>) {
     [setOptions]
   );
 
-  useEffect(() => {
-    if (targetId !== null) setCachedId(targetId);
-  }, [targetId]);
-
   return (
     <DropdownContext.Provider
       value={{
@@ -77,8 +70,6 @@ function DropdownProvider<T>({ children }: React.PropsWithChildren<T>) {
         options,
         targetId,
         setTargetId,
-        cachedId,
-        setCachedId,
       }}
     >
       {children}

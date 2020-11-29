@@ -8,14 +8,14 @@ const DURATION = 0.22;
 function DropdownBase() {
   const [hovering, setHovering] = useState(false);
 
-  const { options, cachedId, targetId } = useDropdown();
+  const { options, targetId } = useDropdown();
 
-  const cachedOption = options.find((item) => item.id === cachedId);
+  const targetOption = options.find((item) => item.id === targetId);
 
   let [width, height, x] = [0, 0, 0];
 
-  if (cachedOption) {
-    const { optionCenterX, contentDimensions } = cachedOption;
+  if (targetOption) {
+    const { optionCenterX, contentDimensions } = targetOption;
 
     width = contentDimensions?.width as number;
     height = contentDimensions?.height as number;
@@ -104,23 +104,16 @@ type DropdownArrowProps = {
 };
 
 function DropdownArrow({ isFirstInteraction }: DropdownArrowProps) {
-  const { options, cachedId } = useDropdown();
+  const { options, targetId } = useDropdown();
 
-  const cachedOption = options.find((item) => item.id === cachedId);
-
-  const x = cachedOption ? cachedOption.optionCenterX : 0;
+  const targetOption = options.find((item) => item.id === targetId);
+  const x = targetOption?.optionCenterX ?? 0;
 
   return (
     <motion.div
       className="dropdown-arrow"
-      initial={{
-        opacity: 0,
-      }}
-      animate={{
-        x,
-        pointerEvents: "none",
-        opacity: x > 0 ? 1 : 0,
-      }}
+      initial={{ opacity: 0 }}
+      animate={{ x, pointerEvents: "none", opacity: x > 0 ? 1 : 0 }}
       transition={{
         ease: "easeOut",
         x: { duration: isFirstInteraction ? 0 : DURATION },
